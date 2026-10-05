@@ -1,0 +1,80 @@
+{% extends "habitaciones/base.html" %}
+
+{% block title %}Inicio | Hotel Aurora{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">SISTEMA DE GESTIÓN</p>
+        <h1>Bienvenido al <span>Hotel Aurora</span></h1>
+        <p class="hero-text">
+            Administra las habitaciones del hotel de forma rápida, clara y ordenada.
+        </p>
+
+        <div class="hero-actions">
+            <a class="button primary" href="{% url 'lista_habitaciones' %}">Ver habitaciones</a>
+            <a class="button secondary" href="{% url 'crear_habitacion' %}">Registrar habitación</a>
+        </div>
+    </div>
+
+    <div class="hero-card">
+        <div class="hotel-symbol">⌂</div>
+        <h2>Gestión hotelera</h2>
+        <p>Consulta el estado de cada habitación y actualiza sus datos cuando sea necesario.</p>
+    </div>
+</section>
+
+<section class="stats">
+    <article class="stat-card">
+        <span class="stat-label">Total</span>
+        <strong>{{ total_habitaciones }}</strong>
+        <span>habitaciones registradas</span>
+    </article>
+
+    <article class="stat-card available">
+        <span class="stat-label">Disponibles</span>
+        <strong>{{ disponibles }}</strong>
+        <span>listas para reservar</span>
+    </article>
+
+    <article class="stat-card occupied">
+        <span class="stat-label">No disponibles</span>
+        <strong>{{ ocupadas }}</strong>
+        <span>habitaciones ocupadas</span>
+    </article>
+</section>
+
+<section class="section-heading">
+    <div>
+        <p class="eyebrow">RESUMEN</p>
+        <h2>Habitaciones registradas</h2>
+    </div>
+    <a class="text-link" href="{% url 'lista_habitaciones' %}">Ver todas →</a>
+</section>
+
+{% if habitaciones %}
+<div class="room-grid">
+    {% for habitacion in habitaciones|slice:":6" %}
+        <article class="room-card">
+            <div class="room-number">#{{ habitacion.numero }}</div>
+            <div>
+                <h3>{{ habitacion.tipo }}</h3>
+                <p class="price">${{ habitacion.precio }} <span>/ noche</span></p>
+            </div>
+            {% if habitacion.disponible %}
+                <span class="status available">Disponible</span>
+            {% else %}
+                <span class="status occupied">No disponible</span>
+            {% endif %}
+        </article>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <div class="empty-icon">⌂</div>
+    <h3>Aún no hay habitaciones registradas</h3>
+    <p>Comienza agregando la primera habitación del hotel.</p>
+    <a class="button primary" href="{% url 'crear_habitacion' %}">Agregar habitación</a>
+</div>
+{% endif %}
+{% endblock %}

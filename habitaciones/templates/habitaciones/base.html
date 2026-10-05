@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hotel Aurora{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'habitaciones/css/estilo.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <a class="brand" href="{% url 'inicio' %}">
+                <span class="brand-icon">H</span>
+                <span>
+                    <strong>Hotel Aurora</strong>
+                    <small>Gestión de habitaciones</small>
+                </span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="{% url 'inicio' %}">Inicio</a>
+                <a href="{% url 'lista_habitaciones' %}">Habitaciones</a>
+                <a class="nav-button" href="{% url 'crear_habitacion' %}">+ Nueva habitación</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert success">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>Hotel Aurora · Sistema de gestión de habitaciones</p>
+    </footer>
+</body>
+</html>
